@@ -1,0 +1,23 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.mashad</groupId>
+  <artifactId>jbsbe</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <dependencies>
+  	<dependency>
+  		<groupId>net.sf.j8583</groupId>
+  		<artifactId>j8583</artifactId>
+  		<version>1.11.0</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.projectlombok</groupId>
+  		<artifactId>lombok</artifactId>
+  		<version>1.16.8</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>de.vandermeer</groupId>
+  		<artifactId>asciitable</artifactId>
+  		<version>0.2.5</version>
+  	</dependency>
+  </dependencies>
+</project>

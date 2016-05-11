@@ -1,0 +1,16 @@
+package org.mashad.jbsbe.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target(ElementType.FIELD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface IsoField {
+	public int index();
+	public boolean isMasked() default false;
+	public boolean simpleMapping() default true;
+	public String comment() default "";
+
+}
