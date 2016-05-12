@@ -1,6 +1,4 @@
-package org.mashad.reflection;
-
-import org.mashad.jbsbe.iso.I50Message;
+package org.mashad.jbsbe.iso;
 
 public interface I50Transformer<T extends I50Message> {
 
