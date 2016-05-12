@@ -20,15 +20,17 @@ Because j8583 is
 - Support metadata in the I50Message(hashmap), come in handy for tracing for example.
 
 ### Creating Iso8583 Template
-The following code creates template for all iso messages used
+The following code creates template for all iso messages used, purchase request in the last line is shown in the [next step](#@nnotation-feature). I50Factory is subclass to j8583 MessageFactory so you can use all its functionality here as well. This code is usually what is added to your business logic.
 ```java
+I50Factory factory = new I50Factory();
 I50Factory.addField(4, "Amount", I50Type.AMOUNT);
 I50Factory.addField(10, "Date", I50Type.DATE10);
 I50Factory.addField(11, "stan", I50Type.NUMERIC, 6);
+I50Message message = factory.newMessage(purchaseRequest);
 ```
 
 ### @nnotation Feature
-The following code results in creation of an ISO Message (0x200) with the given fields by help from the template set [previousely](#creating-iso8583-template).
+The following pojo is fed in the last line of previous step to create an ISO Message (0x200), its fields are set by help from the template set [previousely](#creating-iso8583-template).
 ```java
 @Iso8583(type=0x200)
 public class PurchaseRequest {
