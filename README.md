@@ -28,7 +28,7 @@ I50Factory.addField(11, "stan", I50Type.NUMERIC, 6);
 ```
 
 ### @nnotation Feature
-The following code results in creation of an ISO Message (0x200) with the given fields by help from the template set previousely.
+The following code results in creation of an ISO Message (0x200) with the given fields by help from the template set [previousely](# creating-iso8583-template).
 ```java
 @Iso8583(type=0x200)
 public class PurchaseRequest {
