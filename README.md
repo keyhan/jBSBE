@@ -11,6 +11,15 @@ Because j8583 is
   - Nice printing.
   - Real Binary Fields.
 
+## How to get it
+```
+<dependency>
+  <groupId>com.github.keyhan</groupId>
+  <artifactId>jbsbe</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+</dependency>
+```
+
 ## jBSBE Features
 - Annotation based Message Transformation (Introducing @Iso858s and @IsoField)
 - Beautiful toString for the ISO Message
