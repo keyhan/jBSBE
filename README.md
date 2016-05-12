@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/keyhan/jBSBE.svg?branch=master)](https://travis-ci.org/keyhan/jBSBE)
 # jBSBE
 ## What is jBSBE
-jBSBE is really a flavor of the [j8583](https://github.com/chochos/j8583), adding some missing functionality and simplifying its usage. 
+jBSBE is an addon on top of the [j8583](https://github.com/chochos/j8583), adding some missing functionality and simplifying its usage. 
 
 ## Features
 - Annotation based Message Transformation (Introducing @Iso858s and @IsoField)
