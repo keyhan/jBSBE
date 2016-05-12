@@ -4,7 +4,7 @@
   <artifactId>jbsbe</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   
-  <name>jBSBE Flavor of j8583</name>
+  <name>jBSBE Addon Functionality to j8583</name>
     <description>
         ISO8583 Library.
     </description>
