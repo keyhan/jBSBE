@@ -3,6 +3,13 @@
   <groupId>org.mashad</groupId>
   <artifactId>jbsbe</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  
+  <name>jBSBE Flavor of j8583</name>
+    <description>
+        ISO8583 Library.
+    </description>
+
+  
   <properties>
     <java.version>1.8</java.version>
     <maven.compiler.source>1.8</maven.compiler.source>
