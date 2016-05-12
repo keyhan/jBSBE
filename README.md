@@ -1,10 +1,10 @@
-# JBSBE
-The aim of this library is to make usage of the j8583 library much easier and some new features.
+# jBSBE
+## What is jBSBE
+jBSBE is really a flavor of the [j8583](https://github.com/chochos/j8583), adding some missing functionality and simplifying its usage. 
 
-This is Done by:
-Using Configuration through simple java code instead of XML classes. The method below is used to configure the fields for iso8583 messages:
-  I50Factory.addField(int index, String name, I50Type isoType, int length); 
-  
-Using Annotation to set the messages. No need for unnecessary transformation.
-
-Adding support for mixage of binary and nonbinary fields.
+## Features
+- Annotation based Message Transformation (Introducing @Iso858s and @IsoField)
+- Beautiful toString for the ISO Message
+- Simplifying setting Fields for ISO Message by Setting up Templates in I50Factory.
+  - I50Factory.addField(int index, String name, I50Type isoType, int length);
+- Supporting Mixture of binary and non binary fields in message (Introducing I50Binary and I50LLLBin Types)
