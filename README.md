@@ -9,3 +9,4 @@ jBSBE is an addon on top of the [j8583](https://github.com/chochos/j8583), addin
 - Simplifying setting Fields for ISO Message by Setting up Templates in I50Factory.
   - I50Factory.addField(int index, String name, I50Type isoType, int length);
 - Supporting Mixture of binary and non binary fields in message (Introducing I50Binary and I50LLLBin Types)
+- Support metadata in the I50Message(hashmap), come in handy for tracing for example.
