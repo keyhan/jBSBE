@@ -111,7 +111,11 @@ public class I50Factory extends MessageFactory<I50Message> {
 
 	}
 
-	public static void addField(int index, String name, I50Type isoType, int length) {
+	public static void addField(int index, String name, I50Type isoType) {
+        addField(index,name,isoType,0);
+	}
+    
+    public static void addField(int index, String name, I50Type isoType, int length) {
 		switch (isoType) {
 		case ALPHA:
 		case BINARY:
