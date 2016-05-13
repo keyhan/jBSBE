@@ -3,6 +3,10 @@
 ## What is jBSBE
 jBSBE is an addon on top of the [j8583](https://github.com/chochos/j8583) which is a java implementation of the [ISO8583](https://en.wikipedia.org/wiki/ISO_8583) implementation, adding some missing functionality and simplifying its usage.
 
+License
+----------------
+Project uses [Apache License 2.0](LICENSE)
+
 ## Why jBSBE
 Because j8583 is
 - unnecessary cumbersome to setup.
