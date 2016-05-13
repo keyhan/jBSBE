@@ -33,9 +33,10 @@ Because j8583 is
 - Supporting Mixture of binary and non binary fields in message (Introducing I50Binary and I50LLLBin Types)
 - Support metadata in the I50Message, come in handy for tracing for example.
 
+Following Sections show how easy you can use the library to setup an ISO Message, ready tp be sent on a socket.
 
 ### @nnotation Feature
-The following pojo represents an ISO Message (0x200), its fields are set by help from the template set [Next Step](#creating-iso8583-template).
+First thing you need is the message body itself. The following pojo represents an ISO Message (0x200), its fields are set by help from the template set [Next Step](#creating-iso8583-template).
 ```java
 @Iso8583(type=0x200)
 public class PurchaseRequest {
@@ -49,7 +50,7 @@ public class PurchaseRequest {
 ```
 
 ### Creating Iso8583 Template
-The following code creates template for all types of iso messages used, purchase request in the last line is shown in the [previous](#nnotation-feature). This code is usually set when your application starts up.
+The following code creates template for all types of iso messages used. This code is usually located in initialization part of the application.
 ```java
 I50Factory.addField(4, "Amount", I50Type.AMOUNT);
 I50Factory.addField(10, "Date", I50Type.DATE10);
@@ -57,7 +58,7 @@ I50Factory.addField(11, "stan", I50Type.NUMERIC, 6);
 ```
 
 ### Event driven messaging
-The code below is a simple example on how to create an ISO Message from Pojo. Think that same scenario could be triggered by a REST request where purchase request is actually the body of the request.
+The code below is a simple example on how to create an ISO Message from Pojo. Think that same scenario could be triggered by a REST request where purchase request is actually the body of the request. Now you have an ISO Message ready to be sent.
 ```java
 I50Factory factory = new I50Factory();
 PurchaseRequest purchaseRequest = PurchaseRequest.builder().amount(100L).date(new Date()).stan(123456).build();
@@ -65,7 +66,7 @@ I50Message message = factory.newMessage(purchaseRequest);
 ```
 
 ### toString
-The following code (message is the ISO Message created by the Annotation example above)
+The following code
 ```java
 System.out.println(message);
 ```
