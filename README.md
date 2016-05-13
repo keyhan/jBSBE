@@ -21,26 +21,17 @@ Because j8583 is
 ```
 
 ## jBSBE Features
+- Based on  [j8583](https://github.com/chochos/j8583), so the classes I50Message and I50Factory extends the IsoMessage and Message factory in the j8583 with all its functionalities.
 - Annotation based Message Transformation (Introducing @Iso858s and @IsoField)
 - Beautiful toString for the ISO Message
 - Simplifying creating templates for ISO Message by Setting up Templates in I50Factory.
   - I50Factory.addField(int index, String name, I50Type isoType, int length);
 - Supporting Mixture of binary and non binary fields in message (Introducing I50Binary and I50LLLBin Types)
-- Support metadata in the I50Message(hashmap), come in handy for tracing for example.
+- Support metadata in the I50Message, come in handy for tracing for example.
 
-### Creating Iso8583 Template
-The following code creates template for all iso messages used, purchase request in the last line is shown in the [next step](#@nnotation-feature). I50Factory is subclass to j8583 MessageFactory so you can use all its functionality here as well. This code is usually what is added to your business logic.
-```java
-I50Factory factory = new I50Factory();
-I50Factory.addField(4, "Amount", I50Type.AMOUNT);
-I50Factory.addField(10, "Date", I50Type.DATE10);
-I50Factory.addField(11, "stan", I50Type.NUMERIC, 6);
-PurchaseRequest purchaseRequest = PurchaseRequest.builder().amount(100L).date(new Date()).stan(123456).build();
-I50Message message = factory.newMessage(purchaseRequest);
-```
 
 ### @nnotation Feature
-The following pojo is fed in the last line of previous step to create an ISO Message (0x200), its fields are set by help from the template set [previousely](#creating-iso8583-template).
+The following pojo represents an ISO Message (0x200), its fields are set by help from the template set [Next Step](#creating-iso8583-template).
 ```java
 @Iso8583(type=0x200)
 public class PurchaseRequest {
@@ -52,6 +43,23 @@ public class PurchaseRequest {
 	public Integer stan;
 }
 ```
+
+### Creating Iso8583 Template
+The following code creates template for all types of iso messages used, purchase request in the last line is shown in the [previous](#nnotation-feature). This code is usually set when your application starts up.
+```java
+I50Factory.addField(4, "Amount", I50Type.AMOUNT);
+I50Factory.addField(10, "Date", I50Type.DATE10);
+I50Factory.addField(11, "stan", I50Type.NUMERIC, 6);
+```
+
+### Event driven messaging
+The code below is a simple example on how to create an ISO Message from Pojo. Think that same scenario could be triggered by a REST request where purchase request is actually the body of the request.
+```java
+I50Factory factory = new I50Factory();
+PurchaseRequest purchaseRequest = PurchaseRequest.builder().amount(100L).date(new Date()).stan(123456).build();
+I50Message message = factory.newMessage(purchaseRequest);
+```
+
 ### toString
 The following code (message is the ISO Message created by the Annotation example above)
 ```java
