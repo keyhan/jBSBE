@@ -20,6 +20,8 @@ public enum I50Type {
 
 	, I50Binary//
 	, I50LLLBIN//
+	, I50LLBIN//
+	, I50LLLLBIN//
 
 	;
 

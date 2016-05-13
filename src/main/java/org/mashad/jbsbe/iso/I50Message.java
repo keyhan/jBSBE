@@ -57,7 +57,19 @@ public class I50Message extends IsoMessage {
 			if (value instanceof IsoBinaryData) {
 				super.setField(key, new LLLBinaryValue(IsoType.BINARY, (IsoBinaryData) value));
 			}
+			return this;
+		case I50LLBIN:
+			if (value instanceof IsoBinaryData) {
+				super.setField(key, new LLBinaryValue(IsoType.BINARY, (IsoBinaryData) value));
+			}
+			return this;
+		case I50LLLLBIN:
+			if (value instanceof IsoBinaryData) {
+				super.setField(key, new LLLLBinaryValue(IsoType.BINARY, (IsoBinaryData) value));
+			}
+			return this;
 		default:
+			break;
 		}
 
 		Integer length = I50Factory.i50Fields.get(key).length;
