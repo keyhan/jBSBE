@@ -16,5 +16,7 @@ public class PurchaseRequest {
 	public Long amount;
 	@IsoField(index=11)
 	public Integer stan;
+	@IsoField(index=35)
+	public String cardNumber;
 	
 }

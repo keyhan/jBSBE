@@ -46,15 +46,19 @@ public class PurchaseRequest {
 	public Long amount;
 	@IsoField(index=11)
 	public Integer stan;
+	@IsoField(index=35)
+	public String cardNumber;
 }
 ```
 
 ### Creating Iso8583 Template
-The following code creates template for all types of iso messages used. This code is usually located in initialization part of the application.
+The following code creates template for all types of iso messages used. This code is usually located in initialization part of the application. Notice that for the field 35 below we set the masking rule, this will lead into the value be masked everytime it is logged.
 ```java
 I50Factory.addField(4, "Amount", I50Type.AMOUNT);
 I50Factory.addField(10, "Date", I50Type.DATE10);
+I50Factory.addField(35, "cardNumber", I50Type.NUMERIC, 16, "xxxx-xxxx-xxxx-####");
 I50Factory.addField(11, "stan", I50Type.NUMERIC, 6);
+
 ```
 
 ### Event driven messaging
@@ -78,17 +82,17 @@ results in following
 ║ Message  ║ 200      ║
 ║ Type     ║          ║
 ╚══════════╩══════════╝
-╔══════════╦══════════╦══════════╦══════════╦══════════╗
-║ Field    ║ Name     ║ Type     ║ Length   ║ Value    ║
-║ Number   ║          ║          ║          ║          ║
-╠══════════╬══════════╬══════════╬══════════╬══════════╣
-║ 4        ║ Amount   ║ AMOUNT   ║ 3(12)    ║ 100      ║
-╠══════════╬══════════╬══════════╬══════════╬══════════╣
-║ 10       ║ Date     ║ DATE10   ║ 10(10)   ║ Thu May  ║
-║          ║          ║          ║          ║ 12       ║
-║          ║          ║          ║          ║ 13:14:05 ║
-║          ║          ║          ║          ║ UTC 2016 ║
-╠══════════╬══════════╬══════════╬══════════╬══════════╣
-║ 11       ║ stan     ║ NUMERIC  ║ 6(6)     ║ 123456   ║
-╚══════════╩══════════╩══════════╩══════════╩══════════╝
+╔══════════╦════════════╦══════════╦══════════╦═════════════════════╗
+║ Field    ║ Name       ║ Type     ║ Length   ║ Value               ║
+║ Number   ║            ║          ║          ║                     ║
+╠══════════╬════════════╬══════════╬══════════╬═════════════════════╣
+║ 4        ║ Amount     ║ AMOUNT   ║ 3(12)    ║ 100                 ║
+╠══════════╬════════════╬══════════╬══════════╬═════════════════════╣
+║ 10       ║ Date       ║ DATE10   ║ 10(10)   ║ Sat May 14 15:56:10 ║
+║          ║            ║          ║          ║ CEST 2016           ║
+╠══════════╬════════════╬══════════╬══════════╬═════════════════════╣
+║ 11       ║ stan       ║ NUMERIC  ║ 6(6)     ║ 123456              ║
+╠══════════╬════════════╬══════════╬══════════╬═════════════════════╣
+║ 35       ║ cardNumber ║ NUMERIC  ║ 16(16)   ║ xxxx-xxxx-xxxx-4567 ║
+╚══════════╩════════════╩══════════╩══════════╩═════════════════════╝
 ```

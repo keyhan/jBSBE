@@ -9,8 +9,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface IsoField {
 	public int index();
-	public boolean isMasked() default false;
 	public boolean simpleMapping() default true;
-	public String comment() default "";
 
 }

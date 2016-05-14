@@ -1,9 +1,12 @@
 package org.mashad.jbsbe.iso;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.time.DateUtils;
@@ -142,7 +145,10 @@ public class I50Message extends IsoMessage {
 		body_table.addRule();
 		body_table.addRow("Field Number", "Name", "Type", "Length", "Value");
 		body_table.addRule();
-		for (int i : I50Factory.i50Fields.keySet()) {
+		List<Integer> indexes = new ArrayList<>(I50Factory.i50Fields.keySet());
+		Collections.sort(indexes);
+		//for (int i : I50Factory.i50Fields.keySet()) {
+		for (int i : indexes) {
 			if (this.hasField(i)) {
 
 				I50Field i50Field = I50Factory.i50Fields.get(i);
@@ -153,8 +159,8 @@ public class I50Message extends IsoMessage {
 				}
 
 				length = fieldValue.toString().length();
-				if (i == 35) {
-					fieldValue = CardUtils.maskCardNumber(fieldValue.toString(), "##xx-xxxx-xxxx-xx##");
+				if (fieldValue instanceof String && i50Field.getMask() != null) {
+					fieldValue = CardUtils.maskCardNumber((String) fieldValue, i50Field.getMask());
 
 				} else if (fieldValue instanceof IsoBinaryData) {
 					byte[] buffer = ((IsoBinaryData) fieldValue).getData();
