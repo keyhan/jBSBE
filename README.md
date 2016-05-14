@@ -1,7 +1,9 @@
 [![Build Status](https://travis-ci.org/keyhan/jBSBE.svg?branch=master)](https://travis-ci.org/keyhan/jBSBE)
+[![Join the chat at https://gitter.im/keyhan/jBSBE](https://badges.gitter.im/keyhan/jBSBE.svg)](https://gitter.im/keyhan/jBSBE?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 # jBSBE
 ## What is jBSBE
-jBSBE is an addon on top of the [j8583](https://github.com/chochos/j8583) which is a java implementation of the [ISO8583](https://en.wikipedia.org/wiki/ISO_8583) implementation, adding some missing functionality and simplifying its usage.
+
+jBSBE is a library on top of the [j8583](https://github.com/chochos/j8583), adding some missing functionality and simplifying its usage.  [j8583](https://github.com/chochos/j8583) is a java implementation of the [ISO8583](https://en.wikipedia.org/wiki/ISO_8583) standard.
 
 License
 ----------------
