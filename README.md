@@ -67,7 +67,9 @@ I50Factory.addField(11, "stan", I50Type.NUMERIC, 6);
 The code below is a simple example on how to create an ISO Message from Pojo. Think that same scenario could be triggered by a REST request where purchase request is actually the body of the request. Now you have an ISO Message ready to be sent.
 ```java
 I50Factory factory = new I50Factory();
-PurchaseRequest purchaseRequest = PurchaseRequest.builder().amount(100L).date(new Date()).stan(123456).cardNumber("1234567891234567").build();
+PurchaseRequest purchaseRequest = PurchaseRequest.builder().amount(100L).date(new Date()).stan(123456)
+	.cardNumber("1234567891234567").build();
+	
 I50Message message = factory.newMessage(purchaseRequest);
 ```
 
