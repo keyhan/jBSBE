@@ -22,7 +22,7 @@ Because j8583 is
 <dependency>
   <groupId>com.github.keyhan</groupId>
   <artifactId>jbsbe</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1</version>
 </dependency>
 ```
 
