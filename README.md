@@ -64,9 +64,14 @@ I50Factory.addField(11, "stan", I50Type.NUMERIC, 6);
 ```
 
 ### Event driven messaging
-The code below is a simple example on how to create an ISO Message from Pojo. Think that same scenario could be triggered by a REST request where purchase request is actually the body of the request. Now you have an ISO Message ready to be sent.
+The code below is a simple example on how to create an ISO Message from Pojo.
+
+SimpleTransformer class is just a simple transformer as it is said here, copying the value of the field in pojo into the ISO message. If you want another behavior you have to extend the SimpleTransformer and change the behavior of its setField method.
+
+Also Think the scenario below could be triggered by a REST request where purchase request is actually the body of the request. Now you have an ISO Message ready to be sent.
+
 ```java
-I50Factory factory = new I50Factory();
+I50Factory factory = new I50Factory(SimpleTransformer.class);
 PurchaseRequest purchaseRequest = PurchaseRequest.builder().amount(100L).date(new Date()).stan(123456).build();
 I50Message message = factory.newMessage(purchaseRequest);
 ```

@@ -15,19 +15,19 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.ToString;
 
-@NoArgsConstructor
-public class I50Factory extends MessageFactory<I50Message> {
+
+public class I50Factory<T extends SimpleTransformer> extends MessageFactory<I50Message> {
 
 	@Override
 	protected I50Message createIsoMessage(String header) {
 		return new I50Message(header);
 	}
 
-	public I50Factory(I50Transformer<I50Message> transformer) {
-		this.transformer = transformer;
+	public I50Factory(Class<T> clazz) throws InstantiationException, IllegalAccessException {
+		this.transformer = clazz.newInstance();
 	}
 
-	private I50Transformer<I50Message> transformer = null;
+	private T transformer = null;
 
 	private I50Message setupClass(final @NonNull Object instance) {
 		I50Message message = null;
@@ -45,6 +45,18 @@ public class I50Factory extends MessageFactory<I50Message> {
 
 	private Field[] getAllFields(final @NonNull Object instance) {
 		return instance.getClass().getDeclaredFields();
+	}
+
+	private boolean requiresCustomTransformer(final Object instance) {
+		Map<Integer, Field> fields = getAllIsoFields(instance);
+		IsoField isoField;
+		for (Field field : fields.values()) {
+			isoField = field.getAnnotation(IsoField.class);
+			if (isoField.simpleMapping() == false) {
+				return true;
+			}
+		}
+		return true;
 	}
 
 	private Map<Integer, Field> getAllIsoFields(final Object instance) {
@@ -65,21 +77,18 @@ public class I50Factory extends MessageFactory<I50Message> {
 			throws IllegalArgumentException, IllegalAccessException {
 		@NonNull
 		I50Message message = setupClass(instance);
+		
+		if(requiresCustomTransformer(instance) && transformer.getClass() == SimpleTransformer.class) {
+			throw new IllegalArgumentException("One or several of your fields require custom transformer");
+		}
 
 		Map<Integer, Field> isoFields = getAllIsoFields(instance);
 		Field field;
 		for (int i = 3; i < 129; i++) {
 			field = isoFields.get(i);
-			IsoField isoField;
 			if (null != field) {
-				isoField = field.getAnnotation(IsoField.class);
 				Object value = field.get(instance);
-				if (isoField.simpleMapping()) {
-					
-						message.setField(i, value);
-				} else {
-					transformer.setField(i, value, message);
-				}
+				transformer.setField(i, value, message);
 			}
 		}
 		return message;
@@ -156,13 +165,13 @@ public class I50Factory extends MessageFactory<I50Message> {
 			if (null != mask) {
 				I50Factory.i50Fields.put(index, new I50Factory.I50Field(name, isoType, length, mask));
 			} else {
-			I50Factory.i50Fields.put(index, new I50Factory.I50Field(name, isoType, length));
+				I50Factory.i50Fields.put(index, new I50Factory.I50Field(name, isoType, length));
 			}
 			break;
 
 		default:
 			if (null != mask) {
-			I50Factory.i50Fields.put(index, new I50Factory.I50Field(name, isoType,mask));
+				I50Factory.i50Fields.put(index, new I50Factory.I50Field(name, isoType, mask));
 			} else {
 				I50Factory.i50Fields.put(index, new I50Factory.I50Field(name, isoType));
 			}
