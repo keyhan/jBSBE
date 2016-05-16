@@ -71,8 +71,10 @@ SimpleTransformer class is just a simple transformer as it is said here, copying
 Also Think the scenario below could be triggered by a REST request where purchase request is actually the body of the request. Now you have an ISO Message ready to be sent.
 
 ```java
+
 I50Factory factory = new I50Factory(SimpleTransformer.class);
-PurchaseRequest purchaseRequest = PurchaseRequest.builder().amount(100L).date(new Date()).stan(123456).build();
+PurchaseRequest purchaseRequest = PurchaseRequest.builder().amount(100L).date(new Date()).stan(123456)
+	.cardNumber("1234567891234567").build();
 I50Message message = factory.newMessage(purchaseRequest);
 ```
 
