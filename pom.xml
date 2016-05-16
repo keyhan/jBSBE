@@ -1,77 +1,131 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.github.keyhan</groupId>
-  <artifactId>jbsbe</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  
-  <name>jBSBE Addon Functionality to j8583</name>
-    <description>
-        ISO8583 Library.
-    </description>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.github.keyhan</groupId>
+	<artifactId>jbsbe</artifactId>
+	<!--<version>0.0.1-SNAPSHOT</version> -->
+	<version>0.0.1</version>
 
-  
-  <properties>
-    <java.version>1.8</java.version>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <junit.version>4.12</junit.version>
-  </properties>
-  <dependencies>
-  	<dependency>
-  		<groupId>net.sf.j8583</groupId>
-  		<artifactId>j8583</artifactId>
-  		<version>1.11.0</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.projectlombok</groupId>
-  		<artifactId>lombok</artifactId>
-  		<version>1.16.8</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>de.vandermeer</groupId>
-  		<artifactId>asciitable</artifactId>
-  		<version>0.2.5</version>
-  	</dependency>
-  	<dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-  </dependencies>
-  <distributionManagement>
-  <snapshotRepository>
-    <id>ossrh</id>
-    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-  </snapshotRepository>
-</distributionManagement>
-<build>
-  <plugins>
-    <plugin>
-      <groupId>org.sonatype.plugins</groupId>
-      <artifactId>nexus-staging-maven-plugin</artifactId>
-      <version>1.6.7</version>
-      <extensions>true</extensions>
-      <configuration>
-        <serverId>ossrh</serverId>
-        <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-        <autoReleaseAfterClose>true</autoReleaseAfterClose>
-      </configuration>
-    </plugin>
-<!--     <plugin> -->
-<!--       <groupId>org.apache.maven.plugins</groupId> -->
-<!--       <artifactId>maven-gpg-plugin</artifactId> -->
-<!--       <version>1.6</version> -->
-<!--       <executions> -->
-<!--         <execution> -->
-<!--           <id>sign-artifacts</id> -->
-<!--           <phase>verify</phase> -->
-<!--           <goals> -->
-<!--             <goal>sign</goal> -->
-<!--           </goals> -->
-<!--         </execution> -->
-<!--       </executions> -->
-<!--     </plugin> -->
-  </plugins>
-</build>
+	<name>${project.groupId}:${project.artifactId}</name>
+	<description>An ISO8583 library. Based on j8583 but with lots of new features. 
+</description>
+	<url>https://github.com/keyhan/jBSBE</url>
+	<licenses>
+		<license>
+			<name>The Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<name>Keyhan Hadjari</name>
+			<email>keyhan.hadjari@gmail.com</email>
+			<timezone>Europe/Stockholm</timezone>
+			<organization></organization>
+			<organizationUrl></organizationUrl>
+		</developer>
+	</developers>
+
+	<ciManagement>
+		<system>Travis CI</system>
+		<url>https://travis-ci.org/keyhan/jBSBE</url>
+	</ciManagement>
+
+	<scm>
+		<connection>scm:git:https://github.com/keyhan/jBSBE.git</connection>
+		<developerConnection>scm:git:git@github.com:keyhan/jBSBE.git</developerConnection>
+		<url>${project.url}</url>
+		<tag>HEAD</tag>
+	</scm>
+
+	<properties>
+		<java.version>1.8</java.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<junit.version>4.12</junit.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>net.sf.j8583</groupId>
+			<artifactId>j8583</artifactId>
+			<version>1.11.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.16.8</version>
+		</dependency>
+		<dependency>
+			<groupId>de.vandermeer</groupId>
+			<artifactId>asciitable</artifactId>
+			<version>0.2.5</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.7</version>
+				<extensions>true</extensions>
+				<configuration>
+					<serverId>ossrh</serverId>
+					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+					<autoReleaseAfterClose>true</autoReleaseAfterClose>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9.1</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>
