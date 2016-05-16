@@ -56,7 +56,7 @@ public class I50Factory<T extends SimpleTransformer> extends MessageFactory<I50M
 				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 
 	private Map<Integer, Field> getAllIsoFields(final Object instance) {
