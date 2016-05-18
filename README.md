@@ -65,7 +65,7 @@ I50Factory.addField(11, "stan", I50Type.NUMERIC, 6);
 
 ```
 
-### Event driven messaging
+### Messaging
 The code below is a simple example on how to create an ISO Message from Pojo.
 
 SimpleTransformer class is just a simple transformer as it is said here, copying the value of the field in pojo into the ISO message. If you want another behavior you have to extend the SimpleTransformer and change the behavior of its setField method.
