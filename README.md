@@ -20,11 +20,21 @@ Because j8583 is
   - Metadata in iso message.
 
 ## How to get it
-```
+
+### Stable Release
+```xml
 <dependency>
   <groupId>com.github.keyhan</groupId>
   <artifactId>jbsbe</artifactId>
   <version>0.0.1</version>
+</dependency>
+```
+### Snapshot
+```xml
+<dependency>
+  <groupId>com.github.keyhan</groupId>
+  <artifactId>jbsbe</artifactId>
+  <version>0.0.2-SNAPSHOT</version>
 </dependency>
 ```
 

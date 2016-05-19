@@ -4,7 +4,7 @@
 	<groupId>com.github.keyhan</groupId>
 	<artifactId>jbsbe</artifactId>
 	<!--<version>0.0.1-SNAPSHOT</version> -->
-	<version>0.0.1</version>
+	<version>0.0.2-SNAPSHOT</version>
 
 	<name>${project.groupId}:${project.artifactId}</name>
 	<description>An ISO8583 library. Based on j8583 but with lots of new features. 
