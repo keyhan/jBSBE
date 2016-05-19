@@ -96,6 +96,10 @@ public class I50Message extends IsoMessage {
 		}
 		return stanGenerator.nextTrace();
 	}
+	
+	public I50Message setStan() {
+		return setField(11, generateStan());
+	}
 
 	public IsoBinaryData getMac() {
 		return getObjectValue(getMacPosition());

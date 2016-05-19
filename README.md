@@ -40,16 +40,15 @@ Because j8583 is
 Following Sections show how easy you can use the library to setup an ISO Message, ready tp be sent on a socket.
 
 ### @nnotation Feature
-First thing you need is the message body itself. The following pojo represents an ISO Message (0x200), its fields are set by help from the template set [Next Step](#creating-iso8583-template).
+First thing you need is the message body itself. The @Iso8583 tells us that following pojo represents an ISO Message (0x200), the @AutoStan annotation makes use of the j8583 SimpleTraceGenerator to automatically set the stan. Message fields are set by help from the template set [Next Step](#creating-iso8583-template).
 ```java
 @Iso8583(type=0x200)
+@AutoStan
 public class PurchaseRequest {
 	@IsoField(index=10)
 	public Date date;
 	@IsoField(index=4)
 	public Long amount;
-	@IsoField(index=11)
-	public Integer stan;
 	@IsoField(index=35)
 	public String cardNumber;
 }
@@ -74,8 +73,8 @@ Also Think the scenario below could be triggered by a REST request where purchas
 
 ```java
 
-I50Factory factory = new I50Factory(SimpleTransformer.class);
-PurchaseRequest purchaseRequest = PurchaseRequest.builder().amount(100L).date(new Date()).stan(123456)
+I50Factory<SimpleTransformer> factory = new I50Factory(SimpleTransformer.class);
+PurchaseRequest purchaseRequest = PurchaseRequest.builder().amount(100L).date(new Date())
 	.cardNumber("1234567891234567").build();
 I50Message message = factory.newMessage(purchaseRequest);
 ```
@@ -102,7 +101,7 @@ results in following
 ║ 10       ║ Date       ║ DATE10   ║ 10(10)   ║ Sat May 14 15:56:10 ║
 ║          ║            ║          ║          ║ CEST 2016           ║
 ╠══════════╬════════════╬══════════╬══════════╬═════════════════════╣
-║ 11       ║ stan       ║ NUMERIC  ║ 6(6)     ║ 123456              ║
+║ 11       ║ stan       ║ NUMERIC  ║ 1(6)     ║ 1                   ║
 ╠══════════╬════════════╬══════════╬══════════╬═════════════════════╣
 ║ 35       ║ cardNumber ║ NUMERIC  ║ 16(16)   ║ xxxx-xxxx-xxxx-4567 ║
 ╚══════════╩════════════╩══════════╩══════════╩═════════════════════╝

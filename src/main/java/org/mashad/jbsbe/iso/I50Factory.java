@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.mashad.jbsbe.annotation.AutoStan;
 import org.mashad.jbsbe.annotation.Iso8583;
 import org.mashad.jbsbe.annotation.IsoField;
 
@@ -77,6 +78,11 @@ public class I50Factory<T extends SimpleTransformer> extends MessageFactory<I50M
 			throws IllegalArgumentException, IllegalAccessException {
 		@NonNull
 		I50Message message = setupClass(instance);
+		
+		Annotation stanAnnotation = instance.getClass().getAnnotation(AutoStan.class);
+		if(null != stanAnnotation) {
+			message.setStan();
+		}
 		
 		if(requiresCustomTransformer(instance) && transformer.getClass() == SimpleTransformer.class) {
 			throw new IllegalArgumentException("One or several of your fields require custom transformer");
