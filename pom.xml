@@ -3,8 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.keyhan</groupId>
 	<artifactId>jbsbe</artifactId>
-	<!--<version>0.0.1-SNAPSHOT</version> -->
-	<version>0.0.2</version>
+	<version>0.0.3-SNAPSHOT</version>
 
 	<name>${project.groupId}:${project.artifactId}</name>
 	<description>The ISO8583 library j8583 made ready for microservices and on stereoids. 
