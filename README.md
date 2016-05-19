@@ -21,22 +21,7 @@ Because j8583 is
 
 ## How to get it
 
-### Stable Release
-```xml
-<dependency>
-  <groupId>com.github.keyhan</groupId>
-  <artifactId>jbsbe</artifactId>
-  <version>0.0.2</version>
-</dependency>
-```
-### Snapshot
-```xml
-<dependency>
-  <groupId>com.github.keyhan</groupId>
-  <artifactId>jbsbe</artifactId>
-  <version>0.0.3-SNAPSHOT</version>
-</dependency>
-```
+jBSBE is available in the mvn repository, just search for the artifact id jbsbe and choose the latest version.
 
 ## jBSBE Features
 - Based on  [j8583](https://github.com/chochos/j8583), so the classes I50Message and I50Factory extends the IsoMessage and Message factory in the j8583 with all its functionalities.
