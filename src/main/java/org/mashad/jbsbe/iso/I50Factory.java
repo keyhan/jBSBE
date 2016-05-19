@@ -12,7 +12,6 @@ import org.mashad.jbsbe.annotation.IsoField;
 
 import com.solab.iso8583.MessageFactory;
 
-import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.ToString;
 

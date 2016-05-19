@@ -26,7 +26,7 @@ Because j8583 is
 <dependency>
   <groupId>com.github.keyhan</groupId>
   <artifactId>jbsbe</artifactId>
-  <version>0.0.1</version>
+  <version>0.0.2</version>
 </dependency>
 ```
 ### Snapshot
@@ -34,7 +34,7 @@ Because j8583 is
 <dependency>
   <groupId>com.github.keyhan</groupId>
   <artifactId>jbsbe</artifactId>
-  <version>0.0.2-SNAPSHOT</version>
+  <version>0.0.3-SNAPSHOT</version>
 </dependency>
 ```
 
