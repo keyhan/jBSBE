@@ -10,10 +10,10 @@ License
 Project uses [Apache License 2.0](LICENSE)
 
 ## Why jBSBE
-Because j8583 is
-- Could be simpler to configure.
-- unnecessary difficult to transform Pojos to ISO Messages. Using it in microservice environment could be a pain.
-- Lacks some useful functionality like:
+Because j8583
+- could be simpler to configure.
+- is unnecessary difficult to transform Pojos to ISO Messages. Using it in microservice environment could be a pain.
+- lacks some useful functionality like:
   - Nice printing.
   - Real Binary Fields. Either all fields are binary or none.
   - Masking fields for logging.
