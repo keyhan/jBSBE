@@ -24,8 +24,8 @@ Because j8583
 jBSBE is available in the mvn repository, just search for the artifact id jbsbe and choose the latest version.
 
 ## jBSBE Features
-- Based on  [j8583](https://github.com/chochos/j8583), so the classes [I50Message](src/main/java/org/mashad/jbsbe/iso/I50Message.java) and I50Factory extends the IsoMessage and Message factory in the j8583 with all its functionalities.
-- Annotation based Message Transformation (Introducing @Iso858s and @IsoField)
+- Based on  [j8583](https://github.com/chochos/j8583), so the classes [I50Message](src/main/java/org/mashad/jbsbe/iso/I50Message.java) and [I50Factory](src/main/java/org/mashad/jbsbe/iso/I50Factory.java) extends the IsoMessage and MessageFactory in the j8583 with all its functionalities.
+- Annotation based Message Transformation (Introducing @Iso8583 and @IsoField)
 - Beautiful toString for the ISO Message
 - Simplifying creating templates for ISO Message by Setting up Templates in I50Factory.
   - I50Factory.addField(int index, String name, I50Type isoType, int length);
@@ -35,7 +35,7 @@ jBSBE is available in the mvn repository, just search for the artifact id jbsbe 
 Following Sections show how easy you can use the library to setup an ISO Message, ready tp be sent on a socket.
 
 ### @nnotation Feature
-First thing you need is the message body itself. The @Iso8583 tells us that following pojo represents an ISO Message (0x200), the @AutoStan annotation makes use of the j8583 SimpleTraceGenerator to automatically set the stan. Message fields are set by help from the template set [Next Step](#creating-iso8583-template).
+First thing you need is the message body itself. The @Iso8583 tells us that following pojo represents an ISO Message of type (0x200), the @AutoStan annotation makes use of the j8583 SimpleTraceGenerator to automatically set the stan. Message fields are set by help from the template set [Next Step](#creating-iso8583-template).
 ```java
 @Iso8583(type=0x200)
 @AutoStan
@@ -62,7 +62,7 @@ I50Factory.addField(11, "stan", I50Type.NUMERIC, 6);
 ### Messaging
 The code below is a simple example on how to create an ISO Message from Pojo.
 
-SimpleTransformer class is just a simple transformer as it is said here, copying the value of the field in pojo into the ISO message. If you want another behavior you have to extend the SimpleTransformer and change the behavior of its setField method.
+SimpleTransformer class is just a simple transformer as it is said here, copying the value of the field from pojo into the ISO message. If you want another behavior you have to extend the SimpleTransformer and change the behavior of its setField method.
 
 Also Think the scenario below could be triggered by a REST request where purchase request is actually the body of the request. Now you have an ISO Message ready to be sent.
 
