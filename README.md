@@ -24,7 +24,7 @@ Because j8583
 jBSBE is available in the mvn repository, just search for the artifact id jbsbe and choose the latest version.
 
 ## jBSBE Features
-- Based on  [j8583](https://github.com/chochos/j8583), so the classes I50Message and I50Factory extends the IsoMessage and Message factory in the j8583 with all its functionalities.
+- Based on  [j8583](https://github.com/chochos/j8583), so the classes [I50Message](src/main/java/org/mashad/jbsbe/iso/I50Message.java) and I50Factory extends the IsoMessage and Message factory in the j8583 with all its functionalities.
 - Annotation based Message Transformation (Introducing @Iso858s and @IsoField)
 - Beautiful toString for the ISO Message
 - Simplifying creating templates for ISO Message by Setting up Templates in I50Factory.
