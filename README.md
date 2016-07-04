@@ -15,7 +15,7 @@ Because j8583
 - is unnecessary difficult to transform Pojos to ISO Messages. Using it in microservice environment could be a pain.
 - lacks some useful functionality like:
   - Nice printing.
-  - Real Binary Fields. Either all fields are binary or none.
+  - Real Binary Fields, not hexed.
   - Masking fields for logging.
   - Metadata in iso message.
 
