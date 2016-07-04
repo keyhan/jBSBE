@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.keyhan</groupId>
 	<artifactId>jbsbe</artifactId>
-	<version>0.0.3-SNAPSHOT</version>
+	<version>0.0.4</version>
 
 	<name>${project.groupId}:${project.artifactId}</name>
 	<description>The ISO8583 library j8583 made ready for microservices and on stereoids. 
@@ -103,7 +103,7 @@
 		<dependency>
 			<groupId>net.sf.j8583</groupId>
 			<artifactId>j8583</artifactId>
-			<version>1.11.0</version>
+			<version>1.12.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -124,7 +124,7 @@
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>1.1.2</version>
+			<version>1.1.7</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
