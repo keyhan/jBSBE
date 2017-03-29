@@ -1,0 +1,17 @@
+
+fields:
+  - position: 4
+    title: Amount
+    type: AMOUNT
+  - position: 10
+    title: Date
+    type: DATE10
+  - position: 35
+    title: CardNumber
+    type: NUMERIC
+    length: 16
+    mask: "xxxx-xxxx-xxxx-####"
+  - position: 11
+    title: Stan
+    type: NUMERIC
+    length: 6
