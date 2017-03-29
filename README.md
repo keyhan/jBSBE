@@ -50,13 +50,41 @@ public class PurchaseRequest {
 ```
 
 ### Creating Iso8583 Template
+
+#### Programmatically
 The following code creates template for all types of iso messages used. This code is usually located in initialization part of the application. Notice that for the field 35 below we set the masking rule, this will lead into the value be masked everytime it is logged.
 ```java
 I50Factory.addField(4, "Amount", I50Type.AMOUNT);
 I50Factory.addField(10, "Date", I50Type.DATE10);
 I50Factory.addField(35, "cardNumber", I50Type.NUMERIC, 16, "xxxx-xxxx-xxxx-####");
 I50Factory.addField(11, "stan", I50Type.NUMERIC, 6);
+```
 
+#### Via Yaml file (since version 0.0.5)
+The second way of creating a template for the iso messages is via a yaml-file that is stored in your classpath. The syntax for the file is like below. It results as the same template as the above.
+``` yaml
+fields:
+  - position: 4
+    title: Amount
+    type: AMOUNT
+  - position: 10
+    title: Date
+    type: DATE10
+  - position: 35
+    title: CardNumber
+    type: NUMERIC
+    length: 16
+    mask: "xxxx-xxxx-xxxx-####"
+  - position: 11
+    title: Stan
+    type: NUMERIC
+    length: 6
+```
+to load the template we will need to call one method.
+
+```java
+I50Utility.loadFieldSchema(null); // looks for a file called iso8583_schema.yml or
+I50Utility.loadFieldSchema("my_file.yml"); // looks for a file called my_file.yml in your classpath
 ```
 
 ### Messaging
