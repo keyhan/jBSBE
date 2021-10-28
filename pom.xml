@@ -51,7 +51,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-source-plugin</artifactId>
-						<version>2.2.1</version>
+						<version>3.2.1</version>
 						<executions>
 							<execution>
 								<id>attach-sources</id>
@@ -64,7 +64,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-javadoc-plugin</artifactId>
-						<version>2.9.1</version>
+						<version>3.3.1</version>
 						<executions>
 							<execution>
 								<id>attach-javadocs</id>
@@ -77,7 +77,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
-						<version>1.6</version>
+						<version>3.0.1</version>
 						<executions>
 							<execution>
 								<id>sign-artifacts</id>
@@ -94,37 +94,37 @@
 	</profiles>
 
 	<properties>
-		<java.version>1.8</java.version>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
+		<java.version>16</java.version>
+		<maven.compiler.source>16</maven.compiler.source>
+		<maven.compiler.target>16</maven.compiler.target>
 		<junit.version>4.12</junit.version>
 	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.8.7</version>
+			<version>2.13.0</version>
 		</dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-yaml</artifactId>
-            <version>2.8.7</version>
+            <version>2.13.0</version>
         </dependency>
 
         <dependency>
 			<groupId>net.sf.j8583</groupId>
 			<artifactId>j8583</artifactId>
-			<version>1.12.0</version>
+			<version>1.17.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.16.12</version>
+			<version>1.18.22</version>
 		</dependency>
 		<dependency>
 			<groupId>de.vandermeer</groupId>
 			<artifactId>asciitable</artifactId>
-			<version>0.2.5</version>
+			<version>0.3.2</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -135,7 +135,7 @@
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>1.1.7</version>
+			<version>1.2.6</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -150,7 +150,7 @@
 			<plugin>
 				<groupId>org.sonatype.plugins</groupId>
 				<artifactId>nexus-staging-maven-plugin</artifactId>
-				<version>1.6.7</version>
+				<version>1.6.8</version>
 				<extensions>true</extensions>
 				<configuration>
 					<serverId>ossrh</serverId>

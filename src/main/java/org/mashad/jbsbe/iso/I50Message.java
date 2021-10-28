@@ -9,20 +9,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.time.DateUtils;
-import org.mashad.jbsbe.iso.I50Factory.I50Field;
-
 import com.solab.iso8583.IsoMessage;
 import com.solab.iso8583.IsoType;
 import com.solab.iso8583.IsoValue;
 import com.solab.iso8583.impl.SimpleTraceGenerator;
 import com.solab.iso8583.util.HexCodec;
 
-import de.vandermeer.asciitable.v2.RenderedTable;
-import de.vandermeer.asciitable.v2.V2_AsciiTable;
-import de.vandermeer.asciitable.v2.render.V2_AsciiTableRenderer;
-import de.vandermeer.asciitable.v2.render.WidthLongestWordMinCol;
-import de.vandermeer.asciitable.v2.themes.V2_E_TableThemes;
+import org.apache.commons.lang3.time.DateUtils;
+import org.mashad.jbsbe.iso.I50Factory.I50Field;
+
+import de.vandermeer.asciitable.AT_Renderer;
+import de.vandermeer.asciitable.AsciiTable;
+import de.vandermeer.asciitable.CWC_LongestWordMin;
+import de.vandermeer.asciithemes.TA_GridThemes;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -128,8 +127,8 @@ public class I50Message extends IsoMessage {
 
 	@Override
 	public String toString() {
-		V2_AsciiTable header_table = new V2_AsciiTable();
-		V2_AsciiTable body_table = new V2_AsciiTable();
+		AsciiTable header_table = new AsciiTable();
+		AsciiTable body_table = new AsciiTable();
 
 		header_table.addRule();
 		header_table.addRow("Field", "Value");
@@ -188,12 +187,13 @@ public class I50Message extends IsoMessage {
 			}
 
 		}
-		V2_AsciiTableRenderer rend = new V2_AsciiTableRenderer();
-		rend.setTheme(V2_E_TableThemes.UTF_DOUBLE.get());
-		rend.setWidth(new WidthLongestWordMinCol(10));
-		RenderedTable rt_header = rend.render(header_table);
-		RenderedTable rt_body = rend.render(body_table);
-		return rt_header.toString() + rt_body.toString();
+		header_table.getContext().setGridTheme(TA_GridThemes.FULL);
+		body_table.getContext().setGridTheme(TA_GridThemes.FULL);
+		AT_Renderer renderer = AT_Renderer.create();
+		renderer.setCWC(new  CWC_LongestWordMin(10));
+		String rt_header = renderer.render(header_table.getRawContent(), header_table.getColNumber(), header_table.getContext());
+		String rt_body = renderer.render(body_table.getRawContent(), body_table.getColNumber(), body_table.getContext());
+		return rt_header +"\n"+ rt_body;
 	}
 
 	// @Override

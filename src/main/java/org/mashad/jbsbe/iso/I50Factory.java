@@ -2,6 +2,7 @@ package org.mashad.jbsbe.iso;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,8 +24,8 @@ public class I50Factory<T extends SimpleTransformer> extends MessageFactory<I50M
 		return new I50Message(header);
 	}
 
-	public I50Factory(Class<T> clazz) throws InstantiationException, IllegalAccessException {
-		this.transformer = clazz.newInstance();
+	public I50Factory(Class<T> clazz) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+		this.transformer = clazz.getConstructor().newInstance();
 	}
 
 	private T transformer = null;

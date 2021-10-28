@@ -2,6 +2,7 @@ package org.mashad.jbsbe.iso;
 
 import static org.junit.Assert.fail;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 
 import org.junit.Before;
@@ -18,7 +19,7 @@ public class I50MessageTest {
 		I50Factory<SimpleTransformer> factory;
 		try {
 			factory = new I50Factory<>(SimpleTransformer.class);
-		} catch (InstantiationException | IllegalAccessException e1) {
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e1) {
 			e1.printStackTrace();
 			fail("Failed to load transformer into factory class");
 			return;
@@ -45,7 +46,7 @@ public class I50MessageTest {
 		I50Factory<KeyhanTransformer> factory;
 		try {
 			factory = new I50Factory<>(KeyhanTransformer.class);
-		} catch (InstantiationException | IllegalAccessException e1) {
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e1) {
 			e1.printStackTrace();
 			fail("Failed to load transformer into factory class");
 			return;
@@ -73,7 +74,7 @@ public class I50MessageTest {
 		I50Factory<SimpleTransformer> factory;
 		try {
 			factory = new I50Factory<>(SimpleTransformer.class);
-		} catch (InstantiationException | IllegalAccessException e1) {
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e1) {
 			e1.printStackTrace();
 			fail("Failed to load transformer into factory class");
 			return;
