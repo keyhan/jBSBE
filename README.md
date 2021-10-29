@@ -62,7 +62,7 @@ I50Factory.addField(35, "cardNumber", I50Type.NUMERIC, 16, "xxxx-xxxx-xxxx-####"
 I50Factory.addField(11, "stan", I50Type.NUMERIC, 6);
 ```
 
-#### Via Yaml file (since version 0.0.5)
+#### Via Yaml file
 The second way of creating a template for the iso messages is via a yaml-file that is stored in your classpath. The syntax for the file is like below. It results as the same template as the above.
 ``` yaml
 fields:
