@@ -1,8 +1,12 @@
 package org.mashad.jbsbe.iso;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.YearMonth;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -15,23 +19,23 @@ import com.solab.iso8583.IsoValue;
 import com.solab.iso8583.impl.SimpleTraceGenerator;
 import com.solab.iso8583.util.HexCodec;
 
-import org.apache.commons.lang3.time.DateUtils;
 import org.mashad.jbsbe.iso.I50Factory.I50Field;
 
 import de.vandermeer.asciitable.AT_Renderer;
 import de.vandermeer.asciitable.AsciiTable;
 import de.vandermeer.asciitable.CWC_LongestWordMin;
 import de.vandermeer.asciithemes.TA_GridThemes;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
-@Data
+@Getter
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 public class I50Message extends IsoMessage {
 
-	private static volatile Calendar initday = Calendar.getInstance();
+	private static volatile LocalDate initday = LocalDate.now();
 
 	public I50Message(String header) {
 		this.header = header;
@@ -86,10 +90,8 @@ public class I50Message extends IsoMessage {
 	}
 
 	public synchronized static int generateStan() {
-		Calendar today = Calendar.getInstance();
-		Date now = new Date();
-		today.setTime(now);
-		if (!DateUtils.isSameDay(today, initday)) {
+		LocalDate today = LocalDate.now();
+		if (today.isAfter(initday)) {
 			stanGenerator = new SimpleTraceGenerator(1);
 			initday = today;
 		}
@@ -156,6 +158,8 @@ public class I50Message extends IsoMessage {
 
 				I50Field i50Field = I50Factory.i50Fields.get(i);
 				Object fieldValue = this.getObjectValue(i);
+				@NonNull
+				I50Type i50Type = i50Field.getI50Type();
 
 				if (fieldValue == null) {
 					continue;
@@ -170,8 +174,15 @@ public class I50Message extends IsoMessage {
 					length = buffer.length;
 					fieldValue = HexCodec.hexEncode(buffer, 0, length);
 					// This is used only for DATE10
-				} else if (fieldValue instanceof Date) {
-					length = 10;
+				} else if (i50Type == I50Type.DATE10) {
+					fieldValue = DateTimeFormatter.ofPattern("MMddHHmmSS").format((LocalDateTime)fieldValue);
+					length = ((String)fieldValue).length();
+				} else if (i50Type == I50Type.DATE4) {
+					fieldValue = DateTimeFormatter.ofPattern("MMdd").format((LocalDate)fieldValue);
+					length = ((String)fieldValue).length();
+				} else if (i50Type == I50Type.DATE_EXP) {
+					fieldValue = DateTimeFormatter.ofPattern("yyMM").format((YearMonth) fieldValue);
+					length = ((String)fieldValue).length();
 				}
 				String maxLength = "";
 				// String maxLength = "unlimited";

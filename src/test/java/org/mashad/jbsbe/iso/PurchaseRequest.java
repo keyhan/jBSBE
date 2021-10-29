@@ -1,6 +1,6 @@
 package org.mashad.jbsbe.iso;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import org.mashad.jbsbe.annotation.Iso8583;
 import org.mashad.jbsbe.annotation.IsoField;
@@ -11,7 +11,7 @@ import lombok.Builder;
 @Builder
 public class PurchaseRequest {
 	@IsoField(index=10)
-	public Date date;
+	public LocalDateTime date;
 	@IsoField(index=4)
 	public Long amount;
 	@IsoField(index=11)

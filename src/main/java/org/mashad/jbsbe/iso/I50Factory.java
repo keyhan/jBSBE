@@ -13,6 +13,7 @@ import org.mashad.jbsbe.annotation.IsoField;
 
 import com.solab.iso8583.MessageFactory;
 
+import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;
 
@@ -103,6 +104,7 @@ public class I50Factory<T extends SimpleTransformer> extends MessageFactory<I50M
 	public static Map<Integer, I50Field> i50Fields = new HashMap<>();
 
 	@ToString
+	@Getter
 	public static class I50Field {
 		Integer length;
 
@@ -112,14 +114,6 @@ public class I50Factory<T extends SimpleTransformer> extends MessageFactory<I50M
 		private String name;
 
 		private String mask;
-
-		public String getMask() {
-			return mask;
-		}
-
-		public String getName() {
-			return name;
-		}
 
 		public I50Field(String name, I50Type isoType, int length, String mask) {
 			this.i50Type = isoType;

@@ -36,12 +36,14 @@ Following Sections show how easy you can use the library to setup an ISO Message
 
 ### @nnotation Feature
 First thing you need is the message body itself. The @Iso8583 tells us that following pojo represents an ISO Message of type (0x200), the @AutoStan annotation makes use of the j8583 SimpleTraceGenerator to automatically set the stan. Message fields are set by help from the template set [Next Step](#creating-iso8583-template).
+
+Think also that for DATE10, DATE4 and DATE_EXP map to LocalDateTime, LocalDate and YearMonth Java Classes, so use them in your Requests.
 ```java
 @Iso8583(type=0x200)
 @AutoStan
 public class PurchaseRequest {
 	@IsoField(index=10)
-	public Date date;
+	public LocalDateTime date;
 	@IsoField(index=4)
 	public Long amount;
 	@IsoField(index=35)
@@ -109,23 +111,22 @@ System.out.println(message);
 ```
 results in following
 ```
-╔══════════╦══════════╗
-║ Field    ║ Value    ║
-╠══════════╬══════════╣
-║ Message  ║ 200      ║
-║ Type     ║          ║
-╚══════════╩══════════╝
-╔══════════╦════════════╦══════════╦══════════╦═════════════════════╗
-║ Field    ║ Name       ║ Type     ║ Length   ║ Value               ║
-║ Number   ║            ║          ║          ║                     ║
-╠══════════╬════════════╬══════════╬══════════╬═════════════════════╣
-║ 4        ║ Amount     ║ AMOUNT   ║ 3(12)    ║ 100                 ║
-╠══════════╬════════════╬══════════╬══════════╬═════════════════════╣
-║ 10       ║ Date       ║ DATE10   ║ 10(10)   ║ Sat May 14 15:56:10 ║
-║          ║            ║          ║          ║ CEST 2016           ║
-╠══════════╬════════════╬══════════╬══════════╬═════════════════════╣
-║ 11       ║ stan       ║ NUMERIC  ║ 1(6)     ║ 1                   ║
-╠══════════╬════════════╬══════════╬══════════╬═════════════════════╣
-║ 35       ║ cardNumber ║ NUMERIC  ║ 16(16)   ║ xxxx-xxxx-xxxx-4567 ║
-╚══════════╩════════════╩══════════╩══════════╩═════════════════════╝
+┌──────────┬──────────┐
+│Field     │Value     │
+├──────────┼──────────┤
+│Message   │200       │
+│Type      │          │
+└──────────┴──────────┘
+┌──────────┬──────────┬──────────┬──────────┬───────────────────┐
+│Field     │Name      │Type      │Length    │Value              │
+│Number    │          │          │          │                   │
+├──────────┼──────────┼──────────┼──────────┼───────────────────┤
+│4         │Amount    │AMOUNT    │3(12)     │100                │
+├──────────┼──────────┼──────────┼──────────┼───────────────────┤
+│10        │Date      │DATE10    │10(10)    │1029184333         │
+├──────────┼──────────┼──────────┼──────────┼───────────────────┤
+│11        │stan      │NUMERIC   │6(6)      │123456             │
+├──────────┼──────────┼──────────┼──────────┼───────────────────┤
+│35        │cardNumber│NUMERIC   │16(16)    │xxxx-xxxx-xxxx-4567│
+└──────────┴──────────┴──────────┴──────────┴───────────────────┘
 ```
