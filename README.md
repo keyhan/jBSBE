@@ -99,7 +99,7 @@ Also Think the scenario below could be triggered by a REST request where purchas
 ```java
 
 I50Factory<SimpleTransformer> factory = new I50Factory(SimpleTransformer.class);
-PurchaseRequest purchaseRequest = PurchaseRequest.builder().amount(100L).date(new Date())
+PurchaseRequest purchaseRequest = PurchaseRequest.builder().amount(100L).date(LocalDateTime.now())
 	.cardNumber("1234567891234567").build();
 I50Message message = factory.newMessage(purchaseRequest);
 ```
