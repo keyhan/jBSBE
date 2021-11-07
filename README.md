@@ -111,6 +111,18 @@ System.out.println(message);
 ```
 results in following
 ```
+
+Message Type: 200, Body: [{name: Amount, type: AMOUNT, value: 100}{name: Date, type: DATE10, value: 1107132866}{name: stan, type: NUMERIC, value: 123456}{name: cardNumber, type: NUMERIC, value: xxxx-xxxx-xxxx-4567}]
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 sec
+
+### prettyPrint
+The following code
+```java
+message.prettyPrint();
+```
+
+results in following
+```
 ┌──────────┬──────────┐
 │Field     │Value     │
 ├──────────┼──────────┤

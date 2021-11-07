@@ -95,7 +95,7 @@ public class I50Message extends IsoMessage {
 		}
 		return stanGenerator.nextTrace();
 	}
-	
+
 	public I50Message setStan() {
 		return setField(11, generateStan());
 	}
@@ -127,6 +127,60 @@ public class I50Message extends IsoMessage {
 
 	@Override
 	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		if (this.getIsoHeader() != null) {
+			builder.append("Header: ");
+			builder.append(this.getIsoHeader());
+			builder.append(", ");
+		}
+		builder.append("Message Type: ");
+		builder.append(Integer.toHexString(this.getType()));
+		for (String key : metadata.keySet()) {
+			builder.append(", " + key + ": ");
+			builder.append(metadata.get(key));
+		}
+		List<Integer> indices = new ArrayList<>(I50Factory.i50Fields.keySet());
+		Collections.sort(indices);
+		builder.append(", Body: [");
+		indices.forEach(index -> appendField(builder, index));
+		builder.append("]");
+
+		return builder.toString();
+	}
+
+	private void appendField(StringBuilder builder, int index) {
+		if (this.hasField(index)) {
+			builder.append("{");
+			I50Field i50Field = I50Factory.i50Fields.get(index);
+			Object fieldValue = this.getObjectValue(index);
+			@NonNull
+			I50Type i50Type = i50Field.getI50Type();
+			if (fieldValue instanceof String && i50Field.getMask() != null) {
+				fieldValue = CardUtils.maskCardNumber((String) fieldValue, i50Field.getMask());
+
+			} else if (fieldValue instanceof IsoBinaryData) {
+				byte[] buffer = ((IsoBinaryData) fieldValue).getData();
+				int length = buffer.length;
+				fieldValue = HexCodec.hexEncode(buffer, 0, length);
+				// This is used only for DATE10
+			} else if (i50Type == I50Type.DATE10) {
+				fieldValue = DateTimeFormatter.ofPattern("MMddHHmmSS").format((LocalDateTime) fieldValue);
+			} else if (i50Type == I50Type.DATE4) {
+				fieldValue = DateTimeFormatter.ofPattern("MMdd").format((LocalDate) fieldValue);
+			} else if (i50Type == I50Type.DATE_EXP) {
+				fieldValue = DateTimeFormatter.ofPattern("yyMM").format((YearMonth) fieldValue);
+			}
+			builder.append("name: ");
+			builder.append(i50Field.getName());
+			builder.append(", type: ");
+			builder.append(i50Field.i50Type.name());
+			builder.append(", value: ");
+			builder.append(fieldValue.toString());
+			builder.append("}");
+		}
+	}
+
+	public String prettyPrint() {
 		AsciiTable header_table = new AsciiTable();
 		AsciiTable body_table = new AsciiTable();
 
@@ -150,7 +204,7 @@ public class I50Message extends IsoMessage {
 		body_table.addRule();
 		List<Integer> indexes = new ArrayList<>(I50Factory.i50Fields.keySet());
 		Collections.sort(indexes);
-		//for (int i : I50Factory.i50Fields.keySet()) {
+		// for (int i : I50Factory.i50Fields.keySet()) {
 		for (int i : indexes) {
 			if (this.hasField(i)) {
 
@@ -173,14 +227,14 @@ public class I50Message extends IsoMessage {
 					fieldValue = HexCodec.hexEncode(buffer, 0, length);
 					// This is used only for DATE10
 				} else if (i50Type == I50Type.DATE10) {
-					fieldValue = DateTimeFormatter.ofPattern("MMddHHmmSS").format((LocalDateTime)fieldValue);
-					length = ((String)fieldValue).length();
+					fieldValue = DateTimeFormatter.ofPattern("MMddHHmmSS").format((LocalDateTime) fieldValue);
+					length = ((String) fieldValue).length();
 				} else if (i50Type == I50Type.DATE4) {
-					fieldValue = DateTimeFormatter.ofPattern("MMdd").format((LocalDate)fieldValue);
-					length = ((String)fieldValue).length();
+					fieldValue = DateTimeFormatter.ofPattern("MMdd").format((LocalDate) fieldValue);
+					length = ((String) fieldValue).length();
 				} else if (i50Type == I50Type.DATE_EXP) {
 					fieldValue = DateTimeFormatter.ofPattern("yyMM").format((YearMonth) fieldValue);
-					length = ((String)fieldValue).length();
+					length = ((String) fieldValue).length();
 				}
 				String maxLength = "";
 				// String maxLength = "unlimited";
@@ -199,10 +253,12 @@ public class I50Message extends IsoMessage {
 		header_table.getContext().setGridTheme(TA_GridThemes.FULL);
 		body_table.getContext().setGridTheme(TA_GridThemes.FULL);
 		AT_Renderer renderer = AT_Renderer.create();
-		renderer.setCWC(new  CWC_LongestWordMin(10));
-		String rt_header = renderer.render(header_table.getRawContent(), header_table.getColNumber(), header_table.getContext());
-		String rt_body = renderer.render(body_table.getRawContent(), body_table.getColNumber(), body_table.getContext());
-		return rt_header +"\n"+ rt_body;
+		renderer.setCWC(new CWC_LongestWordMin(10));
+		String rt_header = renderer.render(header_table.getRawContent(), header_table.getColNumber(),
+				header_table.getContext());
+		String rt_body = renderer.render(body_table.getRawContent(), body_table.getColNumber(),
+				body_table.getContext());
+		return rt_header + "\n" + rt_body;
 	}
 
 	// @Override

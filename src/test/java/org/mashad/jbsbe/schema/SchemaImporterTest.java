@@ -18,7 +18,7 @@ public class SchemaImporterTest {
         I50Factory<SimpleTransformer> factory = new I50Factory<>(SimpleTransformer.class);
         I50Utility.loadFieldSchema(null);
         PurchaseRequest purchaseRequest = PurchaseRequest.builder().amount(100L).date(LocalDateTime.now())
-                .cardNumber("1234567891234567").build();
+                .cardNumber("1234567891234567").stan(123).build();
         I50Message message = factory.newMessage(purchaseRequest);
         System.out.println("message = " + message);
     }
