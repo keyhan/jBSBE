@@ -1,5 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.github.keyhan</groupId>
 	<artifactId>jbsbe</artifactId>
@@ -7,7 +7,7 @@
 
 	<name>${project.groupId}:${project.artifactId}</name>
 	<description>The ISO8583 library j8583 made ready for microservices and on stereoids.
-</description>
+	</description>
 	<url>https://github.com/keyhan/jBSBE</url>
 	<licenses>
 		<license>
@@ -85,6 +85,10 @@
 								<goals>
 									<goal>sign</goal>
 								</goals>
+								<configuration>
+									<keyname>0x789216C3</keyname>
+									<passphraseServerId>0x789216C3</passphraseServerId>
+								</configuration>
 							</execution>
 						</executions>
 					</plugin>
@@ -105,13 +109,13 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.13.0</version>
 		</dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-yaml</artifactId>
-            <version>2.13.0</version>
-        </dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-yaml</artifactId>
+			<version>2.13.0</version>
+		</dependency>
 
-        <dependency>
+		<dependency>
 			<groupId>net.sf.j8583</groupId>
 			<artifactId>j8583</artifactId>
 			<version>1.17.0</version>
@@ -147,6 +151,13 @@
 	</distributionManagement>
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.sonatype.plugins</groupId>
 				<artifactId>nexus-staging-maven-plugin</artifactId>
