@@ -1,9 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.github.keyhan</groupId>
+	<groupId>io.github.keyhan</groupId>
 	<artifactId>jbsbe</artifactId>
-	<version>0.0.5</version>
+	<version>0.0.6</version>
 
 	<name>${project.groupId}:${project.artifactId}</name>
 	<description>The ISO8583 library j8583 made ready for microservices and on stereoids.
@@ -94,9 +94,9 @@
 	</profiles>
 
 	<properties>
-		<java.version>16</java.version>
-		<maven.compiler.source>16</maven.compiler.source>
-		<maven.compiler.target>16</maven.compiler.target>
+		<java.version>17</java.version>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
 		<junit.version>4.13.1</junit.version>
 	</properties>
 	<dependencies>
@@ -154,7 +154,7 @@
 				<extensions>true</extensions>
 				<configuration>
 					<serverId>ossrh</serverId>
-					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+					<nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
 					<autoReleaseAfterClose>true</autoReleaseAfterClose>
 				</configuration>
 			</plugin>
