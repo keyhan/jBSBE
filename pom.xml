@@ -86,8 +86,8 @@
 									<goal>sign</goal>
 								</goals>
 								<configuration>
-									<keyname>0x789216C3</keyname>
-									<passphraseServerId>0x789216C3</passphraseServerId>
+									<keyname>adriAn13</keyname>
+									<passphraseServerId>adriAn13</passphraseServerId>
 								</configuration>
 							</execution>
 						</executions>
