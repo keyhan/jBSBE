@@ -21,7 +21,7 @@ Because j8583
 
 ## How to get it
 
-jBSBE is available in the mvn repository, just search for the artifact id jbsbe and choose the latest version.
+jBSBE was available in the mvn repository. I don't have time to update it there anymore, just clone this repo and build it yourself.
 
 ## jBSBE Features
 - Based on  [j8583](https://github.com/chochos/j8583), so the classes [I50Message](src/main/java/org/mashad/jbsbe/iso/I50Message.java) and [I50Factory](src/main/java/org/mashad/jbsbe/iso/I50Factory.java) extends the IsoMessage and MessageFactory in the j8583 with all its functionalities.
