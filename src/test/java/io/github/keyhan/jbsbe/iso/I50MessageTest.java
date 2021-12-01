@@ -67,6 +67,7 @@ public class I50MessageTest {
 		try {
 			I50Message message = factory.newMessage(purchaseRequest);
 			System.out.println(message);
+			System.out.println(message.prettyPrint());
 		} catch (IllegalArgumentException | IllegalAccessException e) {
 			e.printStackTrace();
 			fail("Not able to create message");

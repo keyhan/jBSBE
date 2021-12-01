@@ -32,7 +32,6 @@ public class LlllvarBinaryParseInfo extends LlllvarParseInfo {
 		}
 		IsoBinaryData data = new IsoBinaryData();
 		data.setData(ArrayUtils.subarray(buf, pos + 4, pos + 4 + len));
-		LLLBinaryValue binaryValue = new LLLBinaryValue(IsoType.LLLBIN, data);
-		return binaryValue;
+		return new LLLBinaryValue(IsoType.LLLBIN, data);
 	}
 }

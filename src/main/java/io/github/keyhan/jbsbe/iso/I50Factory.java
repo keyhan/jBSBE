@@ -4,7 +4,9 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -18,7 +20,6 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;
 
-
 public class I50Factory<T extends SimpleTransformer> extends MessageFactory<I50Message> {
 
 	@Override
@@ -26,7 +27,8 @@ public class I50Factory<T extends SimpleTransformer> extends MessageFactory<I50M
 		return new I50Message(header);
 	}
 
-	public I50Factory(Class<T> clazz) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+	public I50Factory(Class<T> clazz) throws InstantiationException, IllegalAccessException, IllegalArgumentException,
+			InvocationTargetException, NoSuchMethodException, SecurityException {
 		this.transformer = clazz.getConstructor().newInstance();
 	}
 
@@ -55,7 +57,7 @@ public class I50Factory<T extends SimpleTransformer> extends MessageFactory<I50M
 		IsoField isoField;
 		for (Field field : fields.values()) {
 			isoField = field.getAnnotation(IsoField.class);
-			if (isoField.simpleMapping() == false) {
+			if (!isoField.simpleMapping()) {
 				return true;
 			}
 		}
@@ -78,15 +80,14 @@ public class I50Factory<T extends SimpleTransformer> extends MessageFactory<I50M
 
 	public I50Message newMessage(final @NonNull Object instance)
 			throws IllegalArgumentException, IllegalAccessException {
-		@NonNull
 		I50Message message = setupClass(instance);
-		
+		Objects.requireNonNull(message, "Message could not be created from instance: " + instance);
 		Annotation stanAnnotation = instance.getClass().getAnnotation(AutoStan.class);
-		if(null != stanAnnotation) {
+		if (null != stanAnnotation) {
 			message.setStan();
 		}
-		
-		if(requiresCustomTransformer(instance) && transformer.getClass() == SimpleTransformer.class) {
+
+		if (requiresCustomTransformer(instance) && transformer.getClass() == SimpleTransformer.class) {
 			throw new IllegalArgumentException("One or several of your fields require custom transformer");
 		}
 
@@ -102,7 +103,7 @@ public class I50Factory<T extends SimpleTransformer> extends MessageFactory<I50M
 		return message;
 	}
 
-	public static Map<Integer, I50Field> i50Fields = new HashMap<>();
+	protected static final Map<Integer, I50Field> i50Fields = new HashMap<>();
 
 	@ToString
 	@Getter
@@ -154,12 +155,11 @@ public class I50Factory<T extends SimpleTransformer> extends MessageFactory<I50M
 		addField(index, name, isoType, length, null);
 	}
 
+	private static final List<I50Type> DYNAMICLENGTHTYPES = List.of(I50Type.ALPHA, I50Type.BINARY, I50Type.I50BINARY,
+			I50Type.NUMERIC);
+
 	public static void addField(int index, String name, I50Type isoType, int length, String mask) {
-		switch (isoType) {
-		case ALPHA:
-		case BINARY:
-		case I50Binary:
-		case NUMERIC:
+		if (DYNAMICLENGTHTYPES.contains(isoType)) {
 			if (length < 1) {
 				throw new IllegalArgumentException("length is not set correctly");
 			}
@@ -168,15 +168,12 @@ public class I50Factory<T extends SimpleTransformer> extends MessageFactory<I50M
 			} else {
 				I50Factory.i50Fields.put(index, new I50Factory.I50Field(name, isoType, length));
 			}
-			break;
-
-		default:
+		} else {
 			if (null != mask) {
 				I50Factory.i50Fields.put(index, new I50Factory.I50Field(name, isoType, mask));
 			} else {
 				I50Factory.i50Fields.put(index, new I50Factory.I50Field(name, isoType));
 			}
-			break;
 		}
 	}
 

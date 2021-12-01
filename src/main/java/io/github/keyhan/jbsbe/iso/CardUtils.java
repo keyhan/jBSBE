@@ -1,5 +1,8 @@
 package io.github.keyhan.jbsbe.iso;
 
+import lombok.experimental.UtilityClass;
+
+@UtilityClass
 public class CardUtils {
 	public static String maskCardNumber(String cardNumber, String mask) {
 

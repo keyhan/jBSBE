@@ -23,8 +23,7 @@ public class IsoBinaryDataParseInfo extends FieldParseInfo {
              throws ParseException {
          IsoBinaryData data = new IsoBinaryData();
          data.setData(Arrays.copyOfRange(buf, pos, pos + len));
-         IsoBinaryValue binaryValue = new IsoBinaryValue(IsoType.BINARY, data, len);
-         return binaryValue;
+         return new IsoBinaryValue(IsoType.BINARY, data, len);
      }
 
      @Override

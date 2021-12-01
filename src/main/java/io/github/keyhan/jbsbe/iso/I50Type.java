@@ -18,7 +18,7 @@ public enum I50Type {
 	, LLLVAR//
 	, LLLLVAR//
 
-	, I50Binary//
+	, I50BINARY//
 	, I50LLLBIN//
 	, I50LLBIN//
 	, I50LLLLBIN//

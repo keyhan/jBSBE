@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import com.solab.iso8583.IsoMessage;
 import com.solab.iso8583.IsoType;
@@ -50,29 +51,29 @@ public class I50Message extends IsoMessage {
 
 	public <S> I50Message setField(int key, S value) {
 		switch (I50Factory.i50Fields.get(key).i50Type) {
-		case I50Binary:
-			if (value instanceof IsoBinaryData) {
-				super.setField(key, new IsoBinaryValue(IsoType.BINARY, (IsoBinaryData) value,
-						I50Factory.i50Fields.get(key).length));
-			}
-			return this;
-		case I50LLLBIN:
-			if (value instanceof IsoBinaryData) {
-				super.setField(key, new LLLBinaryValue(IsoType.BINARY, (IsoBinaryData) value));
-			}
-			return this;
-		case I50LLBIN:
-			if (value instanceof IsoBinaryData) {
-				super.setField(key, new LLBinaryValue(IsoType.BINARY, (IsoBinaryData) value));
-			}
-			return this;
-		case I50LLLLBIN:
-			if (value instanceof IsoBinaryData) {
-				super.setField(key, new LLLLBinaryValue(IsoType.BINARY, (IsoBinaryData) value));
-			}
-			return this;
-		default:
-			break;
+			case I50BINARY:
+				if (value instanceof IsoBinaryData) {
+					super.setField(key, new IsoBinaryValue(IsoType.BINARY, (IsoBinaryData) value,
+							I50Factory.i50Fields.get(key).length));
+				}
+				return this;
+			case I50LLLBIN:
+				if (value instanceof IsoBinaryData) {
+					super.setField(key, new LLLBinaryValue(IsoType.BINARY, (IsoBinaryData) value));
+				}
+				return this;
+			case I50LLBIN:
+				if (value instanceof IsoBinaryData) {
+					super.setField(key, new LLBinaryValue(IsoType.BINARY, (IsoBinaryData) value));
+				}
+				return this;
+			case I50LLLLBIN:
+				if (value instanceof IsoBinaryData) {
+					super.setField(key, new LLLLBinaryValue(IsoType.BINARY, (IsoBinaryData) value));
+				}
+				return this;
+			default:
+				break;
 		}
 
 		Integer length = I50Factory.i50Fields.get(key).length;
@@ -86,7 +87,7 @@ public class I50Message extends IsoMessage {
 
 	}
 
-	public synchronized static int generateStan() {
+	public static synchronized int generateStan() {
 		LocalDate today = LocalDate.now();
 		if (today.isAfter(initday)) {
 			stanGenerator = new SimpleTraceGenerator(1);
@@ -134,9 +135,9 @@ public class I50Message extends IsoMessage {
 		}
 		builder.append("Message Type: ");
 		builder.append(Integer.toHexString(this.getType()));
-		for (String key : metadata.keySet()) {
-			builder.append(", " + key + ": ");
-			builder.append(metadata.get(key));
+		for (Entry<String, Object> entry : metadata.entrySet()) {
+			builder.append(", " + entry.getKey() + ": ");
+			builder.append(entry.getValue());
 		}
 		List<Integer> indices = new ArrayList<>(I50Factory.i50Fields.keySet());
 		Collections.sort(indices);
@@ -154,8 +155,8 @@ public class I50Message extends IsoMessage {
 			Object fieldValue = this.getObjectValue(index);
 			@NonNull
 			I50Type i50Type = i50Field.getI50Type();
-			if (fieldValue instanceof String && i50Field.getMask() != null) {
-				fieldValue = CardUtils.maskCardNumber((String) fieldValue, i50Field.getMask());
+			if (fieldValue instanceof String fieldString && i50Field.getMask() != null) {
+				fieldValue = CardUtils.maskCardNumber(fieldString, i50Field.getMask());
 
 			} else if (fieldValue instanceof IsoBinaryData) {
 				byte[] buffer = ((IsoBinaryData) fieldValue).getData();
@@ -180,51 +181,56 @@ public class I50Message extends IsoMessage {
 	}
 
 	public String prettyPrint() {
-		AsciiTable header_table = new AsciiTable();
-		AsciiTable body_table = new AsciiTable();
-
-		header_table.addRule();
-		header_table.addRow("Field", "Value");
-		header_table.addRule();
+		AsciiTable headerTable = new AsciiTable();
+		headerTable.addRule();
+		headerTable.addRow("Field", "Value");
+		headerTable.addRule();
 		if (null != this.getIsoHeader()) {
-			header_table.addRow("Header", this.getIsoHeader());
-			header_table.addRule();
+			headerTable.addRow("Header", this.getIsoHeader());
+			headerTable.addRule();
 		}
-		header_table.addRow("Message Type", Integer.toHexString(this.getType()));
-		header_table.addRule();
-		for (String key : metadata.keySet()) {
-			header_table.addRow(key, metadata.get(key));
-			header_table.addRule();
+		headerTable.addRow("Message Type", Integer.toHexString(this.getType()));
+		headerTable.addRule();
+		for (Entry<String, Object> entry : metadata.entrySet()) {
+			headerTable.addRow(entry.getKey(), entry.getValue());
+			headerTable.addRule();
 		}
-
-		int length = 0;
-		body_table.addRule();
-		body_table.addRow("Field Number", "Name", "Type", "Length", "Value");
-		body_table.addRule();
 		List<Integer> indexes = new ArrayList<>(I50Factory.i50Fields.keySet());
 		Collections.sort(indexes);
-		// for (int i : I50Factory.i50Fields.keySet()) {
+		AsciiTable bodyTable = printBodyTable(indexes);
+		headerTable.getContext().setGridTheme(TA_GridThemes.FULL);
+		bodyTable.getContext().setGridTheme(TA_GridThemes.FULL);
+		AT_Renderer renderer = AT_Renderer.create();
+		renderer.setCWC(new CWC_LongestWordMin(10));
+		String rtHeader = renderer.render(headerTable.getRawContent(), headerTable.getColNumber(),
+				headerTable.getContext());
+		String rtBody = renderer.render(bodyTable.getRawContent(), bodyTable.getColNumber(),
+				bodyTable.getContext());
+		return rtHeader + "\n" + rtBody;
+	}
+
+	private AsciiTable printBodyTable(List<Integer> indexes) {
+		AsciiTable bodyTable = new AsciiTable();
+		bodyTable.addRule();
+		bodyTable.addRow("Field Number", "Name", "Type", "Length", "Value");
+		bodyTable.addRule();
+		int length = 0;
 		for (int i : indexes) {
 			if (this.hasField(i)) {
-
 				I50Field i50Field = I50Factory.i50Fields.get(i);
 				Object fieldValue = this.getObjectValue(i);
 				@NonNull
 				I50Type i50Type = i50Field.getI50Type();
-
 				if (fieldValue == null) {
 					continue;
 				}
-
 				length = fieldValue.toString().length();
-				if (fieldValue instanceof String && i50Field.getMask() != null) {
-					fieldValue = CardUtils.maskCardNumber((String) fieldValue, i50Field.getMask());
-
-				} else if (fieldValue instanceof IsoBinaryData) {
-					byte[] buffer = ((IsoBinaryData) fieldValue).getData();
+				if (fieldValue instanceof String fieldString && i50Field.getMask() != null) {
+					fieldValue = CardUtils.maskCardNumber(fieldString, i50Field.getMask());
+				} else if (fieldValue instanceof IsoBinaryData fieldbianry) {
+					byte[] buffer = fieldbianry.getData();
 					length = buffer.length;
 					fieldValue = HexCodec.hexEncode(buffer, 0, length);
-					// This is used only for DATE10
 				} else if (i50Type == I50Type.DATE10) {
 					fieldValue = DateTimeFormatter.ofPattern("MMddHHmmSS").format((LocalDateTime) fieldValue);
 					length = ((String) fieldValue).length();
@@ -235,57 +241,22 @@ public class I50Message extends IsoMessage {
 					fieldValue = DateTimeFormatter.ofPattern("yyMM").format((YearMonth) fieldValue);
 					length = ((String) fieldValue).length();
 				}
-				String maxLength = "";
-				// String maxLength = "unlimited";
-				Integer maxLengthValue = i50Field.length;
-				if (maxLengthValue != null) {
-					maxLength = "(" + maxLengthValue.toString() + ")";
-				} else if ((I50Type.getIsoType(i50Field.i50Type)).getLength() != 0) {
-					maxLengthValue = (I50Type.getIsoType(i50Field.i50Type)).getLength();
-					maxLength = "(" + maxLengthValue.toString() + ")";
-				}
-				body_table.addRow(i, i50Field.getName(), i50Field.i50Type.name(), length + maxLength, fieldValue);
-				body_table.addRule();
+				printRow(bodyTable, i, i50Field, length, fieldValue);
 			}
-
 		}
-		header_table.getContext().setGridTheme(TA_GridThemes.FULL);
-		body_table.getContext().setGridTheme(TA_GridThemes.FULL);
-		AT_Renderer renderer = AT_Renderer.create();
-		renderer.setCWC(new CWC_LongestWordMin(10));
-		String rt_header = renderer.render(header_table.getRawContent(), header_table.getColNumber(),
-				header_table.getContext());
-		String rt_body = renderer.render(body_table.getRawContent(), body_table.getColNumber(),
-				body_table.getContext());
-		return rt_header + "\n" + rt_body;
+		return bodyTable;
 	}
 
-	// @Override
-	// public String toString() {
-	// final StringBuilder debugMsg = new StringBuilder();
-	// if (null != this.getIsoHeader()) {
-	// debugMsg.append("\n Header - " +
-	// this.getIsoHeader()).append(this.getIsoHeader());
-	// }
-	// debugMsg.append("\nMTI:
-	// ").append(Integer.toHexString(this.getType())).append('\n');
-	// for (int i : hifFields.keySet()) {
-	// if (this.hasField(i)) {
-	// final String fieldNo = StringUtils.leftPad(String.valueOf(i), 3, ' ');
-	// Object fieldValue = this.getObjectValue(i);
-	//
-	// if (i == 35) {
-	// fieldValue = CardUtils.maskCardNumber(fieldValue.toString(), '*');
-	// }
-	//
-	// if (fieldValue instanceof IsoBinaryData) {
-	// fieldValue = "Binary Data: " + Hex.encodeHexString(((IsoBinaryData)
-	// fieldValue).getData());
-	// }
-	// debugMsg.append("Field ").append(fieldNo).append(": ")
-	// .append(null != fieldValue ? fieldValue.toString() : null).append("\n");
-	// }
-	// }
-	// return debugMsg.toString();
-	// }
+	private void printRow(AsciiTable bodyTable, int index, I50Field i50Field, int length, Object fieldValue) {
+		String maxLength = "";
+		Integer maxLengthValue = i50Field.length;
+		if (maxLengthValue != null) {
+			maxLength = "(" + maxLengthValue.toString() + ")";
+		} else if ((I50Type.getIsoType(i50Field.i50Type)).getLength() != 0) {
+			maxLengthValue = (I50Type.getIsoType(i50Field.i50Type)).getLength();
+			maxLength = "(" + maxLengthValue.toString() + ")";
+		}
+		bodyTable.addRow(index, i50Field.getName(), i50Field.i50Type.name(), length + maxLength, fieldValue);
+		bodyTable.addRule();
+	}
 }
