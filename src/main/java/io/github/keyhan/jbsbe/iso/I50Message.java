@@ -52,24 +52,24 @@ public class I50Message extends IsoMessage {
 	public <S> I50Message setField(int key, S value) {
 		switch (I50Factory.i50Fields.get(key).i50Type) {
 			case I50BINARY:
-				if (value instanceof IsoBinaryData) {
-					super.setField(key, new IsoBinaryValue(IsoType.BINARY, (IsoBinaryData) value,
+				if (value instanceof IsoBinaryData binaryData) {
+					super.setField(key, new IsoBinaryValue(IsoType.BINARY, binaryData,
 							I50Factory.i50Fields.get(key).length));
 				}
 				return this;
 			case I50LLLBIN:
-				if (value instanceof IsoBinaryData) {
-					super.setField(key, new LLLBinaryValue(IsoType.BINARY, (IsoBinaryData) value));
+				if (value instanceof IsoBinaryData binaryData) {
+					super.setField(key, new LLLBinaryValue(IsoType.BINARY, binaryData));
 				}
 				return this;
 			case I50LLBIN:
-				if (value instanceof IsoBinaryData) {
-					super.setField(key, new LLBinaryValue(IsoType.BINARY, (IsoBinaryData) value));
+				if (value instanceof IsoBinaryData binaryData) {
+					super.setField(key, new LLBinaryValue(IsoType.BINARY, binaryData));
 				}
 				return this;
 			case I50LLLLBIN:
-				if (value instanceof IsoBinaryData) {
-					super.setField(key, new LLLLBinaryValue(IsoType.BINARY, (IsoBinaryData) value));
+				if (value instanceof IsoBinaryData binaryData) {
+					super.setField(key, new LLLLBinaryValue(IsoType.BINARY, binaryData));
 				}
 				return this;
 			default:
@@ -79,9 +79,9 @@ public class I50Message extends IsoMessage {
 		Integer length = I50Factory.i50Fields.get(key).length;
 		if (null != length) {
 			super.setField(key,
-					new IsoValue<>(I50Type.getIsoType(I50Factory.i50Fields.get(key).i50Type), value, length));
+					new IsoValue<>(I50Type.ISOTYPEMAP.get(I50Factory.i50Fields.get(key).i50Type), value, length));
 		} else {
-			super.setField(key, new IsoValue<>(I50Type.getIsoType(I50Factory.i50Fields.get(key).i50Type), value));
+			super.setField(key, new IsoValue<>(I50Type.ISOTYPEMAP.get(I50Factory.i50Fields.get(key).i50Type), value));
 		}
 		return this;
 
@@ -158,8 +158,8 @@ public class I50Message extends IsoMessage {
 			if (fieldValue instanceof String fieldString && i50Field.getMask() != null) {
 				fieldValue = CardUtils.maskCardNumber(fieldString, i50Field.getMask());
 
-			} else if (fieldValue instanceof IsoBinaryData) {
-				byte[] buffer = ((IsoBinaryData) fieldValue).getData();
+			} else if (fieldValue instanceof IsoBinaryData fieldData) {
+				byte[] buffer = fieldData.getData();
 				int length = buffer.length;
 				fieldValue = HexCodec.hexEncode(buffer, 0, length);
 				// This is used only for DATE10
@@ -252,8 +252,8 @@ public class I50Message extends IsoMessage {
 		Integer maxLengthValue = i50Field.length;
 		if (maxLengthValue != null) {
 			maxLength = "(" + maxLengthValue.toString() + ")";
-		} else if ((I50Type.getIsoType(i50Field.i50Type)).getLength() != 0) {
-			maxLengthValue = (I50Type.getIsoType(i50Field.i50Type)).getLength();
+		} else if ((I50Type.ISOTYPEMAP.get(i50Field.i50Type)).getLength() != 0) {
+			maxLengthValue = (I50Type.ISOTYPEMAP.get(i50Field.i50Type)).getLength();
 			maxLength = "(" + maxLengthValue.toString() + ")";
 		}
 		bodyTable.addRow(index, i50Field.getName(), i50Field.i50Type.name(), length + maxLength, fieldValue);

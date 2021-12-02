@@ -8,7 +8,6 @@ import io.github.keyhan.jbsbe.iso.I50Factory;
 import io.github.keyhan.jbsbe.iso.I50Message;
 import io.github.keyhan.jbsbe.iso.PurchaseRequest;
 import io.github.keyhan.jbsbe.iso.SimpleTransformer;
-import io.github.keyhan.jbsbe.schema.I50Utility;
 
 /**
  * Created by keyhan on 2017-03-28.

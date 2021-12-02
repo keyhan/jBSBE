@@ -1,5 +1,8 @@
 package io.github.keyhan.jbsbe.iso;
 
+import java.util.AbstractMap;
+import java.util.Map;
+
 import com.solab.iso8583.IsoType;
 
 public enum I50Type {
@@ -17,47 +20,25 @@ public enum I50Type {
 	, LLVAR//
 	, LLLVAR//
 	, LLLLVAR//
-
 	, I50BINARY//
 	, I50LLLBIN//
 	, I50LLBIN//
 	, I50LLLLBIN//
-
 	;
 
-	public static IsoType getIsoType(I50Type type) {
-		switch (type) {
-		case BINARY:
-			return IsoType.BINARY;
-		case ALPHA:
-			return IsoType.ALPHA;
-		case AMOUNT:
-			return IsoType.AMOUNT;
-		case NUMERIC:
-			return IsoType.NUMERIC;
-		case DATE4:
-			return IsoType.DATE4;
-		case DATE10:
-			return IsoType.DATE10;
-		case TIME:
-			return IsoType.TIME;
-		case DATE_EXP:
-			return IsoType.DATE_EXP;
-		case LLBIN:
-			return IsoType.LLBIN;
-		case LLLBIN:
-			return IsoType.LLLBIN;
-		case LLLLBIN:
-			return IsoType.LLLLBIN;
-		case LLVAR:
-			return IsoType.LLVAR;
-		case LLLVAR:
-			return IsoType.LLLVAR;
-		case LLLLVAR:
-			return IsoType.LLLLVAR;
-
-		default:
-			return null;
-		}
-	}
+	public static final Map<I50Type, IsoType> ISOTYPEMAP = Map.ofEntries(
+		new AbstractMap.SimpleEntry<I50Type, IsoType>(BINARY, IsoType.BINARY),
+		new AbstractMap.SimpleEntry<I50Type, IsoType>(ALPHA, IsoType.ALPHA),
+		new AbstractMap.SimpleEntry<I50Type, IsoType>(AMOUNT, IsoType.AMOUNT),
+		new AbstractMap.SimpleEntry<I50Type, IsoType>(NUMERIC, IsoType.NUMERIC),
+		new AbstractMap.SimpleEntry<I50Type, IsoType>(DATE4, IsoType.DATE4),
+		new AbstractMap.SimpleEntry<I50Type, IsoType>(DATE10, IsoType.DATE10),
+		new AbstractMap.SimpleEntry<I50Type, IsoType>(TIME, IsoType.TIME),
+		new AbstractMap.SimpleEntry<I50Type, IsoType>(DATE_EXP, IsoType.DATE_EXP),
+		new AbstractMap.SimpleEntry<I50Type, IsoType>(LLBIN, IsoType.LLBIN),
+		new AbstractMap.SimpleEntry<I50Type, IsoType>(LLLBIN, IsoType.LLLBIN),
+		new AbstractMap.SimpleEntry<I50Type, IsoType>(LLLLBIN, IsoType.LLLLBIN),
+		new AbstractMap.SimpleEntry<I50Type, IsoType>(LLVAR, IsoType.LLVAR),
+		new AbstractMap.SimpleEntry<I50Type, IsoType>(LLLVAR, IsoType.LLLVAR),
+		new AbstractMap.SimpleEntry<I50Type, IsoType>(LLLLVAR, IsoType.LLLLVAR));
 }
